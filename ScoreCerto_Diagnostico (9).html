@@ -442,7 +442,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
       <div style="text-align:center;margin:18px 0 14px;">
         <button class="cta-btn" style="font-size:14px;padding:14px 32px;" onclick="submitCta('good')">Quero mapear o que ainda não estou capturando →</button>
       </div>
-      <div id="cta-msg-good" style="font-size:12px;color:#6ee7b7;text-align:center;margin-bottom:12px;display:none">✓ Diagnóstico enviado! Retornamos em até 24h.</div>
+      <div id="cta-msg-good" style="font-size:12px;color:#6ee7b7;text-align:center;margin-bottom:12px;display:none">✓ Diagnóstico enviado para o seu e-mail! Retornamos em até 24h.</div>
       <div class="cta-disc">Ou escreva diretamente: <a href="mailto:contato@scorecerto.com.br">contato@scorecerto.com.br</a></div>
     </div>
   </div>
@@ -474,7 +474,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
       <div style="text-align:center;margin:18px 0 14px;">
         <button class="cta-btn" style="font-size:14px;padding:14px 32px;" onclick="submitCta('attn')">Quero entender o que meu time está perdendo →</button>
       </div>
-      <div id="cta-msg-attn" style="font-size:12px;color:#6ee7b7;text-align:center;margin-bottom:12px;display:none">✓ Diagnóstico enviado! Retornamos em até 24h.</div>
+      <div id="cta-msg-attn" style="font-size:12px;color:#6ee7b7;text-align:center;margin-bottom:12px;display:none">✓ Diagnóstico enviado para o seu e-mail! Retornamos em até 24h.</div>
       <div class="cta-disc">Ou escreva diretamente: <a href="mailto:contato@scorecerto.com.br">contato@scorecerto.com.br</a></div>
     </div>
   </div>
@@ -506,7 +506,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
       <div style="text-align:center;margin:18px 0 14px;">
         <button class="cta-btn" style="font-size:14px;padding:14px 32px;" onclick="submitCta('good')">Quero mapear o que ainda não estou capturando →</button>
       </div>
-      <div id="cta-msg-good" style="font-size:12px;color:#6ee7b7;text-align:center;margin-bottom:12px;display:none">✓ Diagnóstico enviado! Retornamos em até 24h.</div>
+      <div id="cta-msg-good" style="font-size:12px;color:#6ee7b7;text-align:center;margin-bottom:12px;display:none">✓ Diagnóstico enviado para o seu e-mail! Retornamos em até 24h.</div>
       <div class="cta-disc">Ou escreva diretamente: <a href="mailto:contato@scorecerto.com.br">contato@scorecerto.com.br</a></div>
     </div>
   </div>
@@ -621,13 +621,22 @@ function submitCta(type) {
   const scoreVal = document.getElementById('score-'+type)?.textContent || '';
   const diag = type === 'risk' ? 'Em Risco' : type === 'attn' ? 'Atenção' : 'Saudável';
 
+  const diagLabel = type === 'risk'
+    ? 'Sua operação está exposta — sua base tem riscos que ainda não estão visíveis.'
+    : type === 'attn'
+    ? 'Sua base está em construção — você tem o time, mas falta o sistema.'
+    : 'Sua operação tem potencial de escala — há expansão invisível na sua base.';
+
   const update = {
-    _subject: `[ScoreCerto] CTA clicado — ${diag} · score ${scoreVal} · ${empresa || email}`,
-    email,
+    _subject: `[ScoreCerto] Seu diagnóstico: ${diag} · score ${scoreVal}`,
+    _replyto: email,
     nome,
     empresa,
+    email,
     score: scoreVal,
     diagnostico: diag,
+    resultado: diagLabel,
+    proximos_passos: 'Entraremos em contato em até 24h para uma conversa de 45 minutos — sem custo e sem compromisso.',
     cta_clicado: 'sim',
     data: new Date().toLocaleString('pt-BR'),
   };
